@@ -1,6 +1,7 @@
 package ru.netology.javaqa;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class TicketManager {
 
@@ -29,6 +30,29 @@ public class TicketManager {
         }
 
         Arrays.sort(result);
+
+        return result;
+    }
+    public Ticket[] findAll(String from, String to, TicketTimeComparator comparator) {
+        int newLength = 0;
+        Ticket[] tickets = repository.getTickets();
+
+        Ticket[] tmp = new Ticket[tickets.length];
+        for (int i = 0; i < tickets.length; i++) {
+            if (tickets[i].getFrom() == from && tickets[i].getTo() == to) {
+                tmp[newLength] = tickets[i];
+                newLength++;
+            }
+        }
+        Ticket[] result = new Ticket[newLength];
+        for (int i = 0; i < newLength; i++) {
+
+            result[i] = tmp[i];
+
+        }
+
+        TicketTimeComparator timeComparator = new TicketTimeComparator();
+        Arrays.sort(result, timeComparator);
 
         return result;
     }
